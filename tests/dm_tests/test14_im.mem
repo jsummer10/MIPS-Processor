@@ -1,0 +1,123 @@
+34040410    vbsme:              ori $a0, $zero, 80
+34050010                        ori $a1, $zero, 16
+34060000                        ori $a2, $zero, 0
+34070000                        ori $a3, $0, 0
+00008820                        add $s1, $0, $0
+00009020                        add $s2, $0, $0
+0000a020                        add $s4, $0, $0
+0000a820                        add $s5, $0, $0
+0c000055                        jal getSAD
+02209820                        add $s3, $s1, $0
+02208820                        add $s1, $s1, $0
+20080000    vbsmeLoop:          addi    $t0, $0, 0
+11140006                        beq $t0, $s4, vbsmeDirection1
+20090001                        addi    $t1, $0, 1
+11340013                        beq $t1, $s4, vbsmeDirection2
+200a0002                        addi    $t2, $0, 2
+11540020                        beq $t2, $s4, vbsmeDirection3
+200b0003                        addi    $t3, $0, 3
+11740029                        beq $t3, $s4, vbsmeDirection4
+64E80058    vbsmeDirection1:    eh  $t0, $a3, 1
+8cc9000c                        lw  $t1, 12($a2)
+8cca0004                        lw  $t2, 4($a2)
+664B0052                        eb  $t3, $s2, 1 
+01094820                        add $t1, $t0, $t1
+014b5022                        sub $t2, $t2, $t3
+012a482a                        slt $t1, $t1, $t2
+11200003                        beq $t1, $0, vbsmeChangeDir1
+64E70054                        ih  $a3, $a3, 1
+0000a820                        add $s5, $0, $0
+08000046                        j   vbsmeTransition
+6652001A    vbsmeChangeDir1:    ib  $s2, $s2, 0
+20140001                        addi    $s4, $0, 1
+22b50001                        addi    $s5, $s5, 1
+08000046                        j   vbsmeTransition
+64E80018    vbsmeDirection2:    eh  $t0, $a3, 0
+8cc90008                        lw  $t1, 8($a2)
+8cca0000                        lw  $t2, 0($a2)
+664B0092                        eb  $t3, $s2, 2
+01094820                        add $t1, $t0, $t1
+014b5022                        sub $t2, $t2, $t3
+012a482a                        slt $t1, $t1, $t2
+11200003                        beq $t1, $0, vbsmeChangeDir2
+64E70014                        ih  $a3, $a3, 0
+0000a820                        add $s5, $0, $0
+08000046                        j   vbsmeTransition
+6652005A    vbsmeChangeDir2:    ib  $s2, $s2, 1
+20140002                        addi    $s4, $0, 2
+22b50001                        addi    $s5, $s5, 1
+08000046                        j   vbsmeTransition
+64E80058    vbsmeDirection3:    eh  $t0, $a3, 1 
+664B00D2						eb  $t1, $s2, 3
+0128482a                        slt $t1, $t1, $t0
+11200003                        beq $t1, $0, vbsmeChangeDir3
+64E7005C                        dh  $a3, $a3, 1
+0000a820                        add $s5, $0, $0
+08000046                        j   vbsmeTransition
+6652009A    vbsmeChangeDir3:    ib  $s2, $s2, 2
+20140003                        addi    $s4, $0, 3
+22b50001                        addi    $s5, $s5, 1
+08000046                        j   vbsmeTransition
+64E80018    vbsmeDirection4:    eh  $t0, $a3, 0
+664B0012                        eb  $t1, $s2, 0 
+0128482a                        slt $t1, $t1, $t0
+11200003                        beq $t1, $0, vbsmeChangeDir4
+64E7001C                        dh  $a3, $a3, 0
+0000a820                        add $s5, $0, $0
+08000046                        j   vbsmeTransition
+665200DA    vbsmeChangeDir4:    ib  $s2, $s2, 3
+20140000                        addi    $s4, $0, 0
+22b50001                        addi    $s5, $s5, 1
+12a00003    vbsmeTransition:    beq $s5, $0, vbsmeGetSAD
+20080004                        addi    $t0, $0, 4
+12a8000a                        beq $s5, $t0, vbsmeDone
+0800000b                        j   vbsmeLoop
+0c000055    vbsmeGetSAD:        jal getSAD
+02204020                        add $t0, $s1, $0
+22310000                        addi    $s1, $s1, 0
+0113482a                        slt $t1, $t0, $s3
+1120ffbc                        beq $t1, $0, vbsmeLoop
+01009820                        add $s3, $t0, $0
+64E20058                        eh  $v0, $a3, 1
+64E30018                        eh  $v1, $a3, 0 
+1500ffb8                        bne $t0, $0, vbsmeLoop
+08000053    vbsmeDone:          j   vbsmeDone
+00000000                        nop
+8cca0008    getSAD:             lw  $t2, 8($a2)
+8ccb000c                        lw  $t3, 12($a2)
+00004020                        add $t0, $0, $0
+00004820                        add $t1, $0, $0
+64EC0018                        eh  $t4, $a3, 0
+64ED0058                        eh  $t5, $a3, 1
+714b5002                        mul $t2, $t2, $t3
+216bffff                        addi    $t3, $t3, -1
+00007020                        add $t6, $0, $0
+8ccf0004    getSADLoop:         lw  $t7, 4($a2)
+71ec7802                        mul $t7, $t7, $t4
+01ed7020                        add $t6, $t7, $t5
+00097880                        sll $t7, $t1, 2
+01e47820                        add $t7, $t7, $a0
+8def0000                        lw  $t7, 0($t7)
+000ec080                        sll $t8, $t6, 2
+0305c020                        add $t8, $t8, $a1
+8f180000                        lw  $t8, 0($t8)
+01f87822                        sub $t7, $t7, $t8
+65EF0019                        abs $t7, $t7 
+010f4020                        add $t0, $t0, $t7
+64EF0058                        eh  $t7, $a3, 1
+01af7822                        sub $t7, $t5, $t7
+01eb782a                        slt $t7, $t7, $t3
+11e00005                        beq $t7, $0, getSADNewRow
+21ad0001                        addi    $t5, $t5, 1
+21290001                        addi    $t1, $t1, 1
+012a782a                        slt $t7, $t1, $t2
+11e00006                        beq $t7, $0, getSADEnd
+0800005e                        j   getSADLoop
+64ED0058    getSADNewRow:       eh  $t5, $a3, 1
+218c0001                        addi    $t4, $t4, 1
+21290001                        addi    $t1, $t1, 1
+112a0001                        beq $t1, $t2, getSADEnd
+0800005e                        j   getSADLoop
+01008820    getSADEnd:          add $s1, $t0, $0
+03e00008                        jr  $ra
+00000000                        nop

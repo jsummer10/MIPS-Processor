@@ -1,0 +1,13 @@
+00004020	// PC:00	main:			add	$t0, $0, $0 ->	main:			add	$t0, $0, $0
+00004820	// PC:04				add	$t1, $0, $0 ->				add	$t1, $0, $0
+00005020	// PC:08				add	$t2, $0, $0 ->				add	$t2, $0, $0
+200c0004	// PC:12				addi	$t4, $0, 4 ->				addi	$t4, $0, 4
+200d0019	// PC:16				addi	$t5, $0, 25 ->				addi	$t5, $0, 25
+21080001	// PC:20	outterLoopStart:	addi	$t0, $t0, 1 ->	outterLoopStart:	addi	$t0, $t0, 1
+214a0002	// PC:24	innerLoop:		addi	$t2, $t2, 2 ->	innerLoop:		addi	$t2, $t2, 2
+21290001	// PC:28				addi	$t1, $t1, 1 ->				addi	$t1, $t1, 1
+152cfffd	// PC:32				bne	$t1, $t4, innerLoop ->				bne	$t1, $t4, innerLoop
+00004820	// PC:36				add	$t1, $0, $0 ->				add	$t1, $0, $0
+150dfffa	// PC:40	outterLoopEnd:		bne	$t0, $t5, outterLoopStart ->	outterLoopEnd:		bne	$t0, $t5, outterLoopStart
+0800000b	// PC:44	done:			j	done ->	done:			j	done
+00000000	// PC:48				nop ->				nop

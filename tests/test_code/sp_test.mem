@@ -1,0 +1,24 @@
+20080004	// PC:00	main:		addi	$t0, $0, 4
+20080008	// PC:04			addi	$t0, $0, 8 
+2008000c	// PC:08			addi	$t0, $0, 12
+20080010	// PC:12			addi	$t0, $0, 16
+20080014	// PC:16			addi	$t0, $0, 20
+0800000f	// PC:20			j	startTest 	
+23bdfffc	// PC:24	returnReg:	addi	$sp, $sp, -4 
+afbf0000	// PC:28			sw	$ra, 0($sp)	
+0000f820	// PC:32			add	$ra, $0, $0	
+2008000c	// PC:36			addi	$t0, $0, 12
+2009000e	// PC:40			addi	$t1, $0, 14
+200a0010	// PC:44			addi	$t2, $0, 16
+8fbf0000	// PC:48			lw	$ra, 0($sp)
+23bd0004	// PC:52			addi	$sp, $sp, 4
+03e00008	// PC:56			jr	$ra
+20080002	// PC:60	startTest:	addi	$t0, $0, 2 
+20090004	// PC:64			addi	$t1, $0, 4
+0c000006	// PC:68			jal	returnReg	
+20080016	// PC:72			addi	$t0, $0, 22 
+20090018	// PC:76			addi	$t1, $0, 24 
+08000016	// PC:80			j	done 
+00000000	// PC:84			nop 
+08000016	// PC:88	done:		j	done 
+00000000	// PC:92			nop
