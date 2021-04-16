@@ -2,9 +2,11 @@
 
 A five-stage pipelined 32-bit MIPS core written in Verilog
 
+Created with the goal of implementing a video compression algorithm
+
 ## Overview
 
-![docs](docs/Datapath.pdf)
+![docs](docs/Datapath.png)
 
 ## Features
 
