@@ -15,6 +15,7 @@ Created with the goal of implementing a video compression algorithm
 - Branches/jumps execute in the ID stage.
 - Forwarding to ID/EX from EX/MEM
 - Hazard detection
+- Custom instructions
 
 ## Execution 
 
