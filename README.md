@@ -19,7 +19,7 @@ Created with the goal of implementing a video compression algorithm
 
 ## Execution 
 
-Core designed and synthesized in Vivado. Implemented on the Xilinx Artix-7 FPGA
+Core designed and synthesized in Vivado and implemented on the Xilinx Artix-7 FPGA
 
 ## Authors
 
